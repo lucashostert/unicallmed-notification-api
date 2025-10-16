@@ -3,11 +3,21 @@ const cors = require('cors')({ origin: true });
 
 // Inicializar Firebase Admin (Vercel vai injetar as credenciais via env)
 if (!admin.apps.length) {
+  // Processar private key corretamente (suporta diferentes formatos)
+  let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+  
+  if (privateKey) {
+    // Remover aspas se existirem
+    privateKey = privateKey.replace(/^["']|["']$/g, '');
+    // Substituir \n literal por quebra de linha real
+    privateKey = privateKey.replace(/\\n/g, '\n');
+  }
+  
   admin.initializeApp({
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+      privateKey: privateKey
     }),
     databaseURL: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseio.com`
   });
