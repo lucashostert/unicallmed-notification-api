@@ -1,0 +1,17 @@
+{
+  "name": "unicallmed-notification-api",
+  "version": "1.0.0",
+  "description": "API para enviar notificações push do UniCallMed",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node api/send-notification.js",
+    "start": "node api/send-notification.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
